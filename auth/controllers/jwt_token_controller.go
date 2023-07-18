@@ -9,7 +9,7 @@ import (
 
 type JWTTokenController struct{}
 
-func (JWTTokenController) CreateJwtToken(userId int) (string, error) {
+func (JWTTokenController) CreateJwtToken(userId int) (string, int64, error) {
 	expiryTime := time.Now().Add(config.AppConfiguration.TokenValidationTime) // expire time of token
 	claims := models.JwtCustomClaims{
 		UserId: userId,
@@ -21,10 +21,10 @@ func (JWTTokenController) CreateJwtToken(userId int) (string, error) {
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := tokenClaims.SignedString(config.AppConfiguration.TokenSecret)
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
 
-	return token, nil
+	return token, expiryTime.Unix(), nil
 }
 
 func (JWTTokenController) CheckTokenValidation(claims models.JwtCustomClaims) bool {
