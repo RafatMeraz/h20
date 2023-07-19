@@ -1,6 +1,7 @@
 package database
 
 import (
+	"github.com/RafatMeraz/h20/auth/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -10,7 +11,7 @@ type Database struct {
 }
 
 func (database *Database) Connect() {
-	dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:my_secret_pw@tcp(127.0.0.1:3306)/h2o?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
@@ -24,5 +25,8 @@ func (database *Database) Instance() *gorm.DB {
 }
 
 func (database *Database) migrations() {
-	database.database.AutoMigrate()
+	err := database.database.AutoMigrate(models.User{})
+	if err != nil {
+		panic(err)
+	}
 }
