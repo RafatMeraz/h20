@@ -10,11 +10,8 @@ import (
 	"log"
 )
 
-var Database database.Database
-
 func init() {
-	Database = database.Database{}
-	Database.Connect()
+	database.Database.Connect()
 }
 
 func main() {

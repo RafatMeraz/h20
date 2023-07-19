@@ -9,7 +9,7 @@ import (
 
 type JWTTokenController struct{}
 
-func (JWTTokenController) CreateJwtToken(userId int) (string, int64, error) {
+func (JWTTokenController) CreateJwtToken(userId uint) (string, int64, error) {
 	expiryTime := time.Now().Add(config.AppConfiguration.TokenValidationTime) // expire time of token
 	claims := models.JwtCustomClaims{
 		UserId: userId,
