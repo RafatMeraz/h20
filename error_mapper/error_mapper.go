@@ -8,7 +8,7 @@ import (
 type ErrorMapper struct{}
 
 func (ErrorMapper) MapError(c echo.Context, err error) error {
-	e := errors[err]
+	e := errorList[err]
 	if e.ErrorCode == 0 {
 		return err
 	}
@@ -20,8 +20,8 @@ func (ErrorMapper) MapError(c echo.Context, err error) error {
 	})
 }
 
-var errors = map[error]errorWrapper{
-	echo.ErrUnauthorized:   errorWrapper{ErrorCode: 401, Message: "Unauthorized"},
+var errorList = map[error]errorWrapper{
+	echo.ErrUnauthorized:   {ErrorCode: 401, Message: "Unauthorized"},
 	gorm.ErrRecordNotFound: {ErrorCode: 401, Message: "User not found"},
 }
 

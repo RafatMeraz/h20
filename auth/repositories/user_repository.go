@@ -5,12 +5,13 @@ import (
 	"github.com/RafatMeraz/h20/database"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
+	"strings"
 )
 
 type UserRepository struct{}
 
-func (UserRepository) AddNewUser(dto models.UserDTO) error {
-	newUserModel := models.User{Name: dto.Name, Password: dto.Password, Email: dto.Email}
+func (UserRepository) CreateNewUser(userRequest models.UserRequest) error {
+	newUserModel := models.User{Name: userRequest.Name, Password: userRequest.Password, Email: userRequest.Email}
 	result := database.Database.Instance().Create(&newUserModel)
 	if result.Error != nil {
 		return result.Error
@@ -18,7 +19,19 @@ func (UserRepository) AddNewUser(dto models.UserDTO) error {
 	return nil
 }
 
-func (UserRepository) CheckPassword(dto models.UserDTO) (uint, error) {
+func (UserRepository) CheckIfUserAlreadyExist(request models.UserRequest) (bool, error) {
+	var user models.User
+	result := database.Database.Instance().Where("email = ?", strings.Trim(request.Email, " ")).Limit(1).Find(&user)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return false, nil
+		}
+		return false, result.Error
+	}
+	return true, nil
+}
+
+func (UserRepository) CheckPassword(dto models.UserRequest) (uint, error) {
 	newUserModel := models.User{
 		Email:    dto.Email,
 		Password: dto.Password,
