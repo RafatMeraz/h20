@@ -25,8 +25,10 @@ func (database *database) Instance() *gorm.DB {
 }
 
 func (database *database) migrations() {
-	err := database.database.AutoMigrate(models.User{})
-	if err != nil {
+	if err := database.database.AutoMigrate(models.User{}); err != nil {
+		panic(err)
+	}
+	if err := database.database.AutoMigrate(models.WaterTrack{}); err != nil {
 		panic(err)
 	}
 }

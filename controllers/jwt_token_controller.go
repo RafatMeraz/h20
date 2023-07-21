@@ -27,9 +27,12 @@ func (JWTTokenController) CreateJwtToken(userId uint) (string, int64, error) {
 	return token, expiryTime.Unix(), nil
 }
 
-func (JWTTokenController) CheckTokenValidation(claims models.JwtCustomClaims) bool {
+func (JWTTokenController) CheckTokenValidation(claims *models.JwtCustomClaims) bool {
 	err := claims.Valid()
-	return err != nil
+	if err != nil {
+		return false
+	}
+	return true
 }
 
 func (JWTTokenController) GetClaimsFromToken(strToken string) (models.JwtCustomClaims, error) {

@@ -21,10 +21,11 @@ func (AuthMiddleware) AuthVerification(next echo.HandlerFunc) echo.HandlerFunc {
 			return err
 		}
 		// checking token validation
-		validate := controllers.JWTTokenController{}.CheckTokenValidation(claims)
+		validate := controllers.JWTTokenController{}.CheckTokenValidation(&claims)
 		if !validate {
 			return echo.ErrUnauthorized
 		}
+		c.Set("user", claims.UserId)
 		return next(c)
 	}
 }

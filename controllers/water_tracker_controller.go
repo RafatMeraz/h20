@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/RafatMeraz/h20/repositories"
 	"github.com/labstack/echo/v4"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -14,18 +15,19 @@ type WaterTrackerController struct {
 func (controller WaterTrackerController) GetUserWaterTrack(c echo.Context) error {
 	var userID uint
 	userParam := c.Param("id")
+	go log.Println(userParam)
 	if userParam == "" {
-		selfID, ok := c.Get("user-id").(uint)
-		if !ok {
+		selfID := c.Get("user").(uint)
+		if selfID == 0 {
 			return echo.ErrUnauthorized
 		}
 		userID = selfID
 	} else {
-		id, err := strconv.Atoi(userParam)
+		paramID, err := strconv.Atoi(userParam)
 		if err != nil {
 			return err
 		}
-		userID = uint(id)
+		userID = uint(paramID)
 	}
 	waterTrackList, err := controller.waterTrackRepository.GetWaterConsumes(userID)
 	if err != nil {
