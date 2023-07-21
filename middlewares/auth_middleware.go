@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"github.com/RafatMeraz/h20/auth/controllers"
+	"github.com/RafatMeraz/h20/controllers"
 	"github.com/labstack/echo/v4"
 	"strings"
 )

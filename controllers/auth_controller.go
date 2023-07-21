@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"github.com/RafatMeraz/h20/auth/models"
-	"github.com/RafatMeraz/h20/auth/repositories"
 	"github.com/RafatMeraz/h20/error_mapper"
+	"github.com/RafatMeraz/h20/models"
+	"github.com/RafatMeraz/h20/repositories"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"net/http"

@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"github.com/RafatMeraz/h20/auth/models"
 	"github.com/RafatMeraz/h20/database"
+	"github.com/RafatMeraz/h20/models"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 	"strings"

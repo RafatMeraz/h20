@@ -1,7 +1,7 @@
 package database
 
 import (
-	"github.com/RafatMeraz/h20/auth/models"
+	"github.com/RafatMeraz/h20/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

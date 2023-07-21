@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"github.com/RafatMeraz/h20/auth/models"
 	"github.com/RafatMeraz/h20/config"
+	"github.com/RafatMeraz/h20/models"
 	"github.com/golang-jwt/jwt"
 	"time"
 )
