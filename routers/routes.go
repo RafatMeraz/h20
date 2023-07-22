@@ -16,4 +16,5 @@ func (Router) RegisterRoutes(e *echo.Echo) {
 	authRouteGroup.GET("water-track/:id", controllers.WaterTrackerController{}.GetUserWaterTrack).Name = "Get water track of user"
 	authRouteGroup.GET("water-track", controllers.WaterTrackerController{}.GetUserWaterTrack).Name = "Self water track history"
 	authRouteGroup.POST("water-track", controllers.WaterTrackerController{}.AddNewWaterTrack).Name = "Add new water track"
+	authRouteGroup.DELETE("water-track/:id", controllers.WaterTrackerController{}.DeleteWaterTrack).Name = "Delete water track"
 }

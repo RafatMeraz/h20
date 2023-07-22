@@ -18,7 +18,7 @@ func (AuthMiddleware) AuthVerification(next echo.HandlerFunc) echo.HandlerFunc {
 		// getting claims from token
 		claims, err := controllers.JWTTokenController{}.GetClaimsFromToken(token)
 		if err != nil {
-			return err
+			return echo.ErrUnauthorized
 		}
 		// checking token validation
 		validate := controllers.JWTTokenController{}.CheckTokenValidation(&claims)

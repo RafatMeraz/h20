@@ -32,3 +32,13 @@ func (WaterTrackerRepository) GetWaterConsumes(userId uint) ([]models.WaterTrack
 	}
 	return waterTrackList, nil
 }
+
+func (WaterTrackerRepository) DeleteWaterConsume(userId uint, trackId uint) error {
+	var waterTrack models.WaterTrack
+	database.Database.Instance().Where("id = ? AND user_id = ?", trackId, userId).Limit(1).Find(&waterTrack)
+	if waterTrack.ID == 0 {
+		return gorm.ErrRecordNotFound
+	}
+	database.Database.Instance().Delete(&waterTrack)
+	return nil
+}

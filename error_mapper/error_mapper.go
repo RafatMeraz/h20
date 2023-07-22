@@ -22,7 +22,7 @@ func (ErrorMapper) MapError(c echo.Context, err error) error {
 
 var errorList = map[error]errorWrapper{
 	echo.ErrUnauthorized:   {ErrorCode: 401, Message: "Unauthorized"},
-	gorm.ErrRecordNotFound: {ErrorCode: 401, Message: "User not found"},
+	gorm.ErrRecordNotFound: {ErrorCode: 401, Message: "record not found"},
 }
 
 type errorWrapper struct {

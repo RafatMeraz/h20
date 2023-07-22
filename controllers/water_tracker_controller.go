@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/RafatMeraz/h20/error_mapper"
 	"github.com/RafatMeraz/h20/models"
 	"github.com/RafatMeraz/h20/repositories"
 	"github.com/go-playground/validator/v10"
@@ -54,4 +55,22 @@ func (controller WaterTrackerController) AddNewWaterTrack(c echo.Context) error 
 		return err
 	}
 	return c.NoContent(http.StatusCreated)
+}
+
+func (controller WaterTrackerController) DeleteWaterTrack(ctx echo.Context) error {
+	var userId, trackId uint
+	consumeId := ctx.Param("id")
+	if consumeId != "" {
+		id, err := strconv.Atoi(consumeId)
+		if err != nil {
+			return err
+		}
+		trackId = uint(id)
+	}
+	userId = ctx.Get("user").(uint)
+	err := controller.waterTrackRepository.DeleteWaterConsume(userId, trackId)
+	if err != nil {
+		return error_mapper.ErrorMapper{}.MapError(ctx, err)
+	}
+	return ctx.NoContent(http.StatusOK)
 }
