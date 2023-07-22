@@ -15,4 +15,5 @@ func (Router) RegisterRoutes(e *echo.Echo) {
 	authRouteGroup := e.Group("/", middlewares.AuthMiddleware{}.AuthVerification)
 	authRouteGroup.GET("water-track/:id", controllers.WaterTrackerController{}.GetUserWaterTrack).Name = "Get water track of user"
 	authRouteGroup.GET("water-track", controllers.WaterTrackerController{}.GetUserWaterTrack).Name = "Self water track history"
+	authRouteGroup.POST("water-track", controllers.WaterTrackerController{}.AddNewWaterTrack).Name = "Add new water track"
 }

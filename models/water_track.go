@@ -13,16 +13,15 @@ type WaterTrack struct {
 }
 
 type WaterTrackRequest struct {
-	UserId      uint `json:"user_id" validate:"required"`
+	UserId      uint
 	Amount      uint `json:"amount" validate:"required"`
 	ConsumeTime uint `json:"consume_time" validate:"required"`
 }
 
 type WaterTrackDTO struct {
 	ID          uint `json:"id"`
-	UserId      uint `json:"user_id"`
 	Amount      uint `json:"amount"`
 	ConsumeTime uint `json:"consume_time"`
-	CreatedAt   uint `json:"created_at"`
+	CreateAt    uint `json:"create_at"`
 	UpdatedAt   uint `json:"updated_at"`
 }

@@ -21,9 +21,9 @@ func (WaterTrackerRepository) AddNewWaterConsume(request models.WaterTrackReques
 	return waterTrack.ID, nil
 }
 
-func (WaterTrackerRepository) GetWaterConsumes(userId uint) ([]models.WaterTrack, error) {
-	var waterTrackList []models.WaterTrack
-	result := database.Database.Instance().Where("user_id = ?", userId).Find(&waterTrackList)
+func (WaterTrackerRepository) GetWaterConsumes(userId uint) ([]models.WaterTrackDTO, error) {
+	var waterTrackList []models.WaterTrackDTO
+	result := database.Database.Instance().Table("water_tracks").Where("user_id = ?", userId).Find(&waterTrackList)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
 			return waterTrackList, nil
