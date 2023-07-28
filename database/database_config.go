@@ -11,7 +11,7 @@ type database struct {
 }
 
 func (database *database) Connect() {
-	dsn := "root:my_secret_pw@tcp(127.0.0.1:3306)/h2o?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:my_secret_pw@tcp(localhost:3306)/h2o?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
