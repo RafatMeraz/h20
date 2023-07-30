@@ -24,5 +24,4 @@ type WaterTrackDTO struct {
 	ConsumeTime uint `json:"consume_time"`
 	CreateAt    uint `json:"create_at"`
 	UpdatedAt   uint `json:"updated_at"`
-	gorm.DeletedAt
 }
