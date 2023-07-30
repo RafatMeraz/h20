@@ -10,8 +10,12 @@ import (
 type Router struct{}
 
 func (Router) RegisterRoutes(e *echo.Echo) {
-	userRepo := repositories.MySqlUserRepository{}
-	authController := controllers.AuthController{Repository: userRepo}
+	authController := controllers.AuthController{
+		Repository: repositories.MySqlUserRepository{},
+	}
+	waterTrackerController := controllers.WaterTrackerController{
+		WaterTrackRepository: repositories.MySqlWaterTrackerRepository{},
+	}
 
 	e.GET("/", controllers.HomeController{}.Home).Name = "Home"
 	// auth routes
@@ -21,8 +25,8 @@ func (Router) RegisterRoutes(e *echo.Echo) {
 	// logged in state routes
 	authRouteGroup := e.Group("/", middlewares.AuthMiddleware{}.AuthVerification)
 	// water track routes
-	authRouteGroup.GET("water-track/:id", controllers.WaterTrackerController{}.GetUserWaterTrack).Name = "Get water track of user"
-	authRouteGroup.GET("water-track", controllers.WaterTrackerController{}.GetUserWaterTrack).Name = "Self water track history"
-	authRouteGroup.POST("water-track", controllers.WaterTrackerController{}.AddNewWaterTrack).Name = "Add new water track"
-	authRouteGroup.DELETE("water-track/:id", controllers.WaterTrackerController{}.DeleteWaterTrack).Name = "Delete water track"
+	authRouteGroup.GET("water-track/:id", waterTrackerController.GetUserWaterTrack).Name = "Get water track of user"
+	authRouteGroup.GET("water-track", waterTrackerController.GetUserWaterTrack).Name = "Self water track history"
+	authRouteGroup.POST("water-track", waterTrackerController.AddNewWaterTrack).Name = "Add new water track"
+	authRouteGroup.DELETE("water-track/:id", waterTrackerController.DeleteWaterTrack).Name = "Delete water track"
 }

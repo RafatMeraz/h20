@@ -12,7 +12,7 @@ import (
 )
 
 type WaterTrackerController struct {
-	waterTrackRepository repositories.WaterTrackerRepository
+	WaterTrackRepository repositories.WaterTrackerRepository
 }
 
 func (controller WaterTrackerController) GetUserWaterTrack(c echo.Context) error {
@@ -33,7 +33,7 @@ func (controller WaterTrackerController) GetUserWaterTrack(c echo.Context) error
 		userID = uint(paramID)
 	}
 	log.Println(userID)
-	waterTrackList, err := controller.waterTrackRepository.GetWaterConsumes(userID)
+	waterTrackList, err := controller.WaterTrackRepository.GetWaterConsumes(userID)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func (controller WaterTrackerController) AddNewWaterTrack(c echo.Context) error 
 	if err := v.Struct(waterTrackRequest); err != nil {
 		return err
 	}
-	_, err := controller.waterTrackRepository.AddNewWaterConsume(waterTrackRequest)
+	_, err := controller.WaterTrackRepository.AddNewWaterConsume(waterTrackRequest)
 	if err != nil {
 		return err
 	}
@@ -69,7 +69,7 @@ func (controller WaterTrackerController) DeleteWaterTrack(ctx echo.Context) erro
 		trackId = uint(id)
 	}
 	userId = ctx.Get("user").(uint)
-	err := controller.waterTrackRepository.DeleteWaterConsume(userId, trackId)
+	err := controller.WaterTrackRepository.DeleteWaterConsume(userId, trackId)
 	if err != nil {
 		return error_mapper.ErrorMapper{}.MapError(ctx, err)
 	}
