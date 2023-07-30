@@ -10,7 +10,7 @@ import (
 )
 
 type AuthController struct {
-	userRepository repositories.UserRepository
+	Repository repositories.UserRepository
 }
 
 func (authController AuthController) Login(c echo.Context) error {
@@ -25,7 +25,7 @@ func (authController AuthController) Login(c echo.Context) error {
 		return validationErr
 	}
 
-	userId, passwordCheckError := authController.userRepository.CheckPassword(userReq)
+	userId, passwordCheckError := authController.Repository.CheckPassword(userReq)
 	if passwordCheckError != nil {
 		return error_mapper.ErrorMapper{}.MapError(c, passwordCheckError)
 	}
@@ -51,7 +51,7 @@ func (authController AuthController) SignUp(c echo.Context) error {
 		return validationErr
 	}
 
-	userExist, err := authController.userRepository.CheckIfUserAlreadyExist(userReq)
+	userExist, err := authController.Repository.CheckIfUserAlreadyExist(userReq)
 	if err != nil {
 		return err
 	}
@@ -61,7 +61,7 @@ func (authController AuthController) SignUp(c echo.Context) error {
 		})
 	}
 
-	if err := authController.userRepository.CreateNewUser(userReq); err != nil {
+	if err := authController.Repository.CreateNewUser(userReq); err != nil {
 		return err
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{

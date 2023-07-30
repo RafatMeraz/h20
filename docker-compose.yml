@@ -7,19 +7,21 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=my_secret_pw
       - MYSQL_DATABASE=h2o
+    ports:
+      - "3306:3306"
     networks:
       - h2o_network
 
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8040:8040"
-    depends_on:
-      - database
-    networks:
-      - h2o_network
+#  backend:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8040:8040"
+#    depends_on:
+#      - database
+#    networks:
+#      - h2o_network
 
 volumes:
   database-data:
