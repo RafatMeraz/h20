@@ -5,6 +5,7 @@ import (
 	"github.com/RafatMeraz/h20/database"
 	"github.com/RafatMeraz/h20/models"
 	"gorm.io/gorm"
+	"log"
 )
 
 type WaterTrackerRepository struct{}
@@ -26,10 +27,11 @@ func (WaterTrackerRepository) GetWaterConsumes(userId uint) ([]models.WaterTrack
 	result := database.Database.Instance().Table("water_tracks").Where("user_id = ?", userId).Find(&waterTrackList)
 	if result.Error != nil {
 		if result.Error == gorm.ErrRecordNotFound {
-			return waterTrackList, nil
+			return []models.WaterTrackDTO{}, nil
 		}
-		return nil, result.Error
+		return nil, nil
 	}
+	log.Println(len(waterTrackList))
 	return waterTrackList, nil
 }
 

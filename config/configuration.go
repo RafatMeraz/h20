@@ -11,5 +11,5 @@ type config struct {
 var AppConfiguration = config{
 	TokenSecret:         []byte("key-of-jwt"),
 	TokenValidationTime: time.Hour * 12,
-	Port:                8040,
+	Port:                8080,
 }

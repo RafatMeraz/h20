@@ -18,5 +18,5 @@ func main() {
 	e := echo.New()
 	routers.Router{}.RegisterRoutes(e)
 	e.Use(middleware.Logger())
-	log.Fatal(e.Start(fmt.Sprintf("localhost:%v", config.AppConfiguration.Port)))
+	log.Fatal(e.Start(fmt.Sprintf("0.0.0.0:%v", config.AppConfiguration.Port)))
 }

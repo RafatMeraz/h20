@@ -32,6 +32,7 @@ func (controller WaterTrackerController) GetUserWaterTrack(c echo.Context) error
 		}
 		userID = uint(paramID)
 	}
+	log.Println(userID)
 	waterTrackList, err := controller.waterTrackRepository.GetWaterConsumes(userID)
 	if err != nil {
 		return err
