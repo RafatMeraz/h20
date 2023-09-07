@@ -1,9 +1,11 @@
 package database
 
 import (
+	"fmt"
 	"github.com/RafatMeraz/h20/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"os"
 )
 
 type database struct {
@@ -11,7 +13,12 @@ type database struct {
 }
 
 func (database *database) Connect() {
-	dsn := "root:my_secret_pw@tcp(database:3306)/h2o?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := fmt.Sprintf("%v:%v@tcp(%v)/%v?charset=utf8mb4&parseTime=True&loc=Local",
+		os.Getenv("DATABASE_USERNAME"),
+		os.Getenv("DATABASE_PASSWORD"),
+		os.Getenv("DATABASE_HOST"),
+		os.Getenv("DATABASE_NAME"),
+	)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
